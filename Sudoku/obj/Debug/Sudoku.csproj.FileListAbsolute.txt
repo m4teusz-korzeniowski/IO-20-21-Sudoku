@@ -1,0 +1,10 @@
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.csprojAssemblyReference.cache
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.Properties.Resources.resources
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.csproj.GenerateResource.cache
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.csproj.CoreCompileInputs.cache
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\bin\Debug\Sudoku.exe.config
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\bin\Debug\Sudoku.exe
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\bin\Debug\Sudoku.pdb
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.Form1.resources
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.exe
+C:\Users\Filip\Desktop\Sudoku2\SudokuGame2\Sudoku\obj\Debug\Sudoku.pdb
