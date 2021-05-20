@@ -75,7 +75,7 @@ namespace IO_Sudoku
 
         private void button5_Click(object sender, EventArgs e)
         {
-            var menu = new Menu();
+            var menu = new Menu(new User());
             menu.Show();
             this.Hide();
         }
