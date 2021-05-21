@@ -59,5 +59,25 @@ namespace IO_Sudoku
                 }
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sudokuBoard = new Board();
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                   fields.ElementAt(i).ElementAt(j).Text = sudokuBoard.Fields.ElementAt(i).ElementAt(j).ToString();
+
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var menu = new Menu(new User());
+            menu.Show();
+            this.Hide();
+        }
     }
 }
