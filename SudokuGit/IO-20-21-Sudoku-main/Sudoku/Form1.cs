@@ -192,11 +192,11 @@ namespace Sudoku
             if (wrongCells.Any())
             {
                 wrongCells.ForEach(x => x.ForeColor = Color.Red);
-                MessageBox.Show("Wrong inputs");
+                MessageBox.Show("Zle");
             }
             else
             {
-                MessageBox.Show("You Wins");
+                MessageBox.Show("Wygrales");
             }
         }
 
