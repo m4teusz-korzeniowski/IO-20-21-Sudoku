@@ -42,7 +42,7 @@ namespace IO_Sudoku
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var board = new MainForm();
+            var board = new Sudoku.Form1();
             board.Show();
             this.Hide();
         }

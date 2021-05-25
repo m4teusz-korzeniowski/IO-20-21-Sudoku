@@ -9,22 +9,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IO_Sudoku.src.exceptions;
+using System.IO;
+using System.Text.Json;
+using System.Net.Mail;
+using System.Net;
+using System.Linq;
 
 namespace IO_Sudoku
 {
     public partial class UserChoice : Form
     {
         List<User> users = new List<User>();
+        List<User> globalUsers = new List<User>();
+        SmtpClient smtpClient;
 
         public UserChoice()
         {
             InitializeComponent();
+            
             centerPanel(panel1);
             centerPanel(panel2);
             centerPanel(panel3);
             panel3.AutoScroll = true;
             centerPanel(panel4);
             centerPanel(panel5);
+            centerPanel(panel6);
+            centerPanel(panel7);
+            Directory.CreateDirectory("local");
+            Directory.CreateDirectory("global");
+
+            loadUsers();
+            loadUsersGlobalUsers();
 
 
             button3.Enabled = false; //tymczasowo wyłączone
@@ -33,13 +48,84 @@ namespace IO_Sudoku
             panel3.Visible = false;
             panel4.Visible = false;
             panel5.Visible = false;
+            panel6.Visible = false;
+            panel7.Visible = false;
 
             label1.Text = "";
             label2.Text = "";
+            label3.Text = "";
+            label4.Text = "";
+            label6.Text = "";
+            label5.Text = "";
+            label7.Text = "";
+
+            textBox6.PasswordChar = '*';
             button7.Visible = false; // fake button do łatwego tworzenia następnych
 
-            button6.Enabled = false; // globalny user tymczasowo wyłączony
-            button9.Enabled = false; // globalny user tymczasowo wyłączony
+            //button6.Enabled = false; // globalny user tymczasowo wyłączony
+            //button9.Enabled = false; // globalny user tymczasowo wyłączony
+
+
+            smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("io.sudoku.2021@gmail.com", "Pork21Boar"),
+                EnableSsl = true,
+            };
+            //smtpClient.Send("io.sudoku.2021@gmail.com", "vilhjajmur@gmail.com", "Test", "1234321");
+            //smtpClient.Send("io.sudoku.2021@gmail.com", "vilhjajmur@gmail.com", "Test", generateLoginToken());
+        }
+
+        private string generateLoginToken()
+        {
+            Random r = new Random();
+            const string chars = "1234567890!@#$%^&*()-_=+" +
+                "QWERTYUIOPADFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm,./<>?;:[{}]";
+            return new string(Enumerable.Repeat(chars, 20).Select(s => s[r.Next(s.Length)]).ToArray());
+        }
+
+        private void loadUsers()
+        {
+            DirectoryInfo localDirectory = new DirectoryInfo("local");
+            DirectoryInfo[] localUsers = localDirectory.GetDirectories();
+            foreach(DirectoryInfo dir in localUsers)
+            {
+                FileInfo[] files = dir.GetFiles("*.json");
+                foreach (FileInfo file in files)
+                {
+                    User u = new User();
+                    string userInfo = File.ReadAllText(file.FullName);
+                    u = JsonSerializer.Deserialize<User>(userInfo);
+
+                    bool isUserAddedProperly = addUser(u);
+                    if (isUserAddedProperly)
+                    {
+                        users.Add(u);
+                    }
+                }
+            }  
+        }
+
+        private void loadUsersGlobalUsers()
+        {
+            DirectoryInfo localDirectory = new DirectoryInfo("global");
+            DirectoryInfo[] localUsers = localDirectory.GetDirectories();
+            foreach (DirectoryInfo dir in localUsers)
+            {
+                FileInfo[] files = dir.GetFiles("*.json");
+                foreach (FileInfo file in files)
+                {
+                    User u = new User();
+                    string userInfo = File.ReadAllText(file.FullName);
+                    u = JsonSerializer.Deserialize<User>(userInfo);
+
+                    bool isUserAddedProperly = addUser(u);
+                    if (isUserAddedProperly)
+                    {
+                        globalUsers.Add(u);
+                    }
+                }
+            }
         }
 
         private void centerPanel(Panel panel)
@@ -90,6 +176,10 @@ namespace IO_Sudoku
                     users.Add(u);
                     panel4.Visible = false;
                     panel1.Visible = true;
+                    Directory.CreateDirectory("local//" + u.Name);
+                    string userInfo = JsonSerializer.Serialize(u);
+                    File.WriteAllText("local//" + u.Name + "//" + u.Name + ".json", userInfo);
+                    
                 }
             }
             catch (IncorrectEmailException ex)
@@ -111,14 +201,62 @@ namespace IO_Sudoku
                     label2.Text = ex.Message;
                 }
             }
-            
-            
+        }
 
+        private void registerGlobalUser()
+        {
+            bool isUserAddedProperly = false;
+            User u = new User();
+            try
+            {
+                u.Name = textBox4.Text;
+                u.Email = textBox3.Text;
+                isUserAddedProperly = addGlobalUser(u);
+                if (isUserAddedProperly)
+                {
+                    string pass = generateLoginToken();
+                    u.Password = pass;
+                    globalUsers.Add(u);
+                    smtpClient.Send("io.sudoku.2021@gmail.com",
+                        u.Email, "Test", pass);
+
+                    panel6.Visible = false;
+                    panel1.Visible = true;
+                    Directory.CreateDirectory("global//" + u.Name);
+                    string userInfo = JsonSerializer.Serialize(u);
+                    File.WriteAllText("global//" + u.Name + "//" + u.Name + ".json", userInfo);
+
+                }
+            }
+            catch (IncorrectEmailException ex)
+            {
+                label2.Text = ex.Message;
+            }
+            catch (InitCharIsNotALetterException ex)
+            {
+                label1.Text = ex.Message;
+            }
+            catch (EpmtyFieldException ex)
+            {
+                if (textBox1.Text == "")
+                {
+                    label1.Text = ex.Message;
+                }
+                if (textBox2.Text == "")
+                {
+                    label2.Text = ex.Message;
+                }
+            }
         }
 
         private bool addUser(User user)
         {
             return !users.Contains(user);
+        }
+
+        private bool addGlobalUser(User user)
+        {
+            return !globalUsers.Contains(user);
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -184,6 +322,48 @@ namespace IO_Sudoku
         {
             panel3.Visible = false;
             panel1.Visible = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+            panel6.Visible = true;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            label5.Text = "";
+            label4.Text = "";
+            registerGlobalUser();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            panel7.Visible = false;
+            panel1.Visible = true;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            panel5.Visible = false;
+            panel7.Visible = true;
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            label6.Text = "";
+            //label7.Text = "";
+
+            foreach (User user in globalUsers)
+            {
+                if(user.Email == textBox5.Text && user.Password == textBox6.Text)
+                {
+                    var menu = new Menu(user);
+                    menu.Location = this.Location;
+                    menu.Show();
+                    this.Hide();
+                }
+            }  
         }
     }
 }

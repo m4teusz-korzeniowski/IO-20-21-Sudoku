@@ -57,7 +57,22 @@ namespace IO_Sudoku.src.model
         public DateTime JoinDate
         {
             get { return _joinDate; }
+            set { _joinDate = value; }
         }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+
+        /*private bool _wasPasswordUsed;
+        public bool WasPasswordUsed
+        {
+            get { return _wasPasswordUsed; }
+            set { _wasPasswordUsed = value; }
+        }*/
 
         public User()
         {
