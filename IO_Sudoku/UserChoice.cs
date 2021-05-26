@@ -42,7 +42,7 @@ namespace IO_Sudoku
             loadUsersGlobalUsers();
 
 
-            button3.Enabled = false; //tymczasowo wyłączone
+            GuestButton.Enabled = false; //tymczasowo wyłączone
 
             panel2.Visible = false;
             panel3.Visible = false;
@@ -364,6 +364,28 @@ namespace IO_Sudoku
                     this.Hide();
                 }
             }  
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UserChoice_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExitUserSelect_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = false;
+            panel1.Visible = true;
+        }
+
+        private void ExitUserLogin_Click(object sender, EventArgs e)
+        {
+            panel5.Visible = false;
+            panel1.Visible = true;
         }
     }
 }

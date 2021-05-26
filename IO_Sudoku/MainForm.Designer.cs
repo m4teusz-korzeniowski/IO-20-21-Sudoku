@@ -38,6 +38,8 @@ namespace Sudoku
             this.Sprawdz = new System.Windows.Forms.Button();
             this.Zapisz = new System.Windows.Forms.Button();
             this.Wyszysc = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -101,9 +103,9 @@ namespace Sudoku
             // 
             // Sprawdz
             // 
-            this.Sprawdz.Location = new System.Drawing.Point(263, 690);
+            this.Sprawdz.Location = new System.Drawing.Point(3, 3);
             this.Sprawdz.Name = "Sprawdz";
-            this.Sprawdz.Size = new System.Drawing.Size(151, 92);
+            this.Sprawdz.Size = new System.Drawing.Size(223, 44);
             this.Sprawdz.TabIndex = 6;
             this.Sprawdz.Text = "Sprawdź";
             this.Sprawdz.UseVisualStyleBackColor = true;
@@ -111,31 +113,45 @@ namespace Sudoku
             // 
             // Zapisz
             // 
-            this.Zapisz.Location = new System.Drawing.Point(420, 690);
+            this.Zapisz.Location = new System.Drawing.Point(232, 3);
             this.Zapisz.Name = "Zapisz";
-            this.Zapisz.Size = new System.Drawing.Size(151, 92);
+            this.Zapisz.Size = new System.Drawing.Size(224, 44);
             this.Zapisz.TabIndex = 7;
             this.Zapisz.Text = "Zapisz";
             this.Zapisz.UseVisualStyleBackColor = true;
             // 
             // Wyszysc
             // 
-            this.Wyszysc.Location = new System.Drawing.Point(577, 690);
+            this.Wyszysc.Location = new System.Drawing.Point(3, 53);
             this.Wyszysc.Name = "Wyszysc";
-            this.Wyszysc.Size = new System.Drawing.Size(151, 92);
+            this.Wyszysc.Size = new System.Drawing.Size(223, 44);
             this.Wyszysc.TabIndex = 8;
             this.Wyszysc.Text = "Wyczyść";
             this.Wyszysc.UseVisualStyleBackColor = true;
             this.Wyszysc.Click += new System.EventHandler(this.Wyszysc_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.Wyszysc, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Sprawdz, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Zapisz, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(279, 694);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(459, 100);
+            this.tableLayoutPanel1.TabIndex = 6;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 816);
-            this.Controls.Add(this.Wyszysc);
-            this.Controls.Add(this.Zapisz);
-            this.Controls.Add(this.Sprawdz);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
@@ -145,6 +161,7 @@ namespace Sudoku
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sudoku";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,6 +178,7 @@ namespace Sudoku
         private System.Windows.Forms.Button Sprawdz;
         private System.Windows.Forms.Button Zapisz;
         private System.Windows.Forms.Button Wyszysc;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 
