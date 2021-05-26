@@ -41,7 +41,6 @@ namespace IO_Sudoku
             loadUsers();
             loadUsersGlobalUsers();
 
-
             GuestButton.Enabled = false; //tymczasowo wyłączone
 
             panel2.Visible = false;
@@ -51,13 +50,13 @@ namespace IO_Sudoku
             panel6.Visible = false;
             panel7.Visible = false;
 
-            label1.Text = "";
-            label2.Text = "";
-            label3.Text = "";
-            label4.Text = "";
-            label6.Text = "";
-            label5.Text = "";
-            label7.Text = "";
+            label1.Text = "Nazwa";
+            label2.Text = "E-mail";
+            label3.Text = "Nie ma stworzonych użytkowników";
+            label4.Text = "Nazwa";
+            label6.Text = "E-mail";
+            label5.Text = "E-mail";
+            label7.Text = "Hasło";
 
             textBox6.PasswordChar = '*';
             button7.Visible = false; // fake button do łatwego tworzenia następnych
@@ -385,6 +384,28 @@ namespace IO_Sudoku
         private void ExitUserLogin_Click(object sender, EventArgs e)
         {
             panel5.Visible = false;
+            panel1.Visible = true;
+        }
+
+        private void label8_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            panel6.Visible = false;
+            panel1.Visible = true;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            panel4.Visible = false;
             panel1.Visible = true;
         }
     }
