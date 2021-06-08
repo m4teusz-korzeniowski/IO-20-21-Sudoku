@@ -13,7 +13,6 @@ using System.IO;
 using System.Text.Json;
 using System.Net.Mail;
 using System.Net;
-using System.Linq;
 
 namespace IO_Sudoku
 {
@@ -146,7 +145,7 @@ namespace IO_Sudoku
 
         private void button4_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -297,7 +296,15 @@ namespace IO_Sudoku
                 button.Location = position;
                 button.Text = user.Name;
                 button.Click += new EventHandler(userClick);
-
+                button.BackColor = Color.FromArgb(56, 140, 0);
+                button.Size = new Size (150, 58);
+                button.FlatStyle = 0;
+                button.FlatAppearance.MouseOverBackColor = Color.YellowGreen;
+                button.FlatAppearance.BorderColor = Color.Black;
+                button.FlatAppearance.BorderSize = 1;
+                button.Font = new Font("Tahoma", 10, FontStyle.Bold);
+                button.ForeColor = Color.WhiteSmoke;
+                button.Location = new Point(button.Location.X + 20);
                 panel3.Controls.Add(button);
                 button.Visible = true;
 
