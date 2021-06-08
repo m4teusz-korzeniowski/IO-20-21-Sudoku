@@ -202,8 +202,13 @@ namespace IO_Sudoku
             this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel2.Controls.Add(this.RegisterLabel);
             this.panel2.Controls.Add(this.tableLayoutPanel3);
+<<<<<<< HEAD
             this.panel2.Location = new System.Drawing.Point(131, -47);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
+=======
+            this.panel2.Location = new System.Drawing.Point(346, 15);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+>>>>>>> refs/remotes/origin/MacKot
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(300, 273);
             this.panel2.TabIndex = 5;
@@ -741,7 +746,11 @@ namespace IO_Sudoku
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(349, 524);
+=======
+            this.ClientSize = new System.Drawing.Size(782, 653);
+>>>>>>> refs/remotes/origin/MacKot
             this.ControlBox = false;
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
