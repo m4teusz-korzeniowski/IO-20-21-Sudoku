@@ -8,12 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace Sudoku
 {
     public partial class Form1 : Form
     {
 
+        int i = 360000;
+        int ticktock = 0;
         class SudokuCell : Button
         {
             public int Value { get; set; }
@@ -34,6 +38,9 @@ namespace Sudoku
             createCells();
 
             startNewGame();
+
+            radioButton1.Checked = true;
+
         }
 
         private void startNewGame()
@@ -147,7 +154,7 @@ namespace Sudoku
                     cells[i, j].Font = new Font(SystemFonts.DefaultFont.FontFamily, 20);
                     cells[i, j].Size = new Size(60, 60);
                     cells[i, j].ForeColor = SystemColors.ControlDarkDark;
-                    cells[i, j].Location = new Point(i * 60, j * 60);
+                    cells[i, j].Location = new Point(i * 50, j * 50);
                     cells[i, j].BackColor = ((i / 3) + (j / 3)) % 2 == 0 ? SystemColors.Control : Color.YellowGreen;
                     cells[i, j].FlatStyle = FlatStyle.Flat;
                     cells[i, j].FlatAppearance.BorderColor = Color.Black;
@@ -194,16 +201,28 @@ namespace Sudoku
             {
                 wrongCells.ForEach(x => x.ForeColor = Color.Red);
                 MessageBox.Show("Zle");
+                i -= 10000;
             }
             else
             {
+                timer1.Enabled = false;
                 MessageBox.Show("Wygrales");
+                string path = @"C:\highscore.txt";
+                string text = File.ReadAllText(path, Encoding.UTF8);
+                if (i > Int32.Parse(text))
+                {
+                    TextWriter hs = new StreamWriter(path);
+                    hs.WriteLine(i);
+                    hs.Close();
+                }
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             startNewGame();
+            i = 360000;
+            timer1.Enabled = true;
         }
 
         private void Wyszysc_Click(object sender, EventArgs e)
@@ -213,6 +232,46 @@ namespace Sudoku
                 if (cell.IsLocked == false)
                     cell.Clear();
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            i--;
+            label2.Text = i.ToString();
+            
+            
+            
+            if (i < 240000) { label2.ForeColor = Color.Gold; };
+            if (i < 120000) {
+                
+                label2.ForeColor = Color.DarkOrange;
+                if (ticktock == 0) {label2.Font = new Font("Tahoma", 24, FontStyle.Bold | FontStyle.Italic); };
+                if (ticktock == 1) {label2.Font = new Font("Tahoma", 22, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X + 2, label2.Location.Y + 2); };
+                if (ticktock == 2) {label2.Font = new Font("Tahoma", 20, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X + 2, label2.Location.Y + 2); };
+                if (ticktock == 3) {label2.Font = new Font("Tahoma", 18, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X + 2, label2.Location.Y + 2); };
+                if (ticktock == 4) {label2.Font = new Font("Tahoma", 16, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X + 2, label2.Location.Y + 2); };
+                if (ticktock == 5) {label2.Font = new Font("Tahoma", 18, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X - 2, label2.Location.Y - 2); };
+                if (ticktock == 6) {label2.Font = new Font("Tahoma", 20, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X - 2, label2.Location.Y - 2); };
+                if (ticktock == 7) {label2.Font = new Font("Tahoma", 22, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X - 2, label2.Location.Y - 2); };
+                if (ticktock == 8) {label2.Font = new Font("Tahoma", 24, FontStyle.Bold | FontStyle.Italic); label2.Location = new Point(label2.Location.X - 2, label2.Location.Y - 2); ticktock = 0; };
+            };
+            if (i < 0) { label2.ForeColor = Color.OrangeRed; };
+           
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void FontClock_Tick(object sender, EventArgs e)
+        {
+            if (i < 120000)
+                ticktock++;
+
+            if (radioButton1.Checked == true) { radioButton1.ForeColor = Color.YellowGreen; radioButton2.ForeColor = Color.WhiteSmoke; radioButton3.ForeColor = Color.WhiteSmoke; radioButton1.Font = new Font("Tahoma", 9, FontStyle.Bold); radioButton2.Font = new Font("Tahoma", 9); radioButton3.Font = new Font("Tahoma", 9); }
+            if (radioButton2.Checked == true) { radioButton2.ForeColor = Color.Khaki; radioButton1.ForeColor = Color.WhiteSmoke; radioButton3.ForeColor = Color.WhiteSmoke; radioButton1.Font = new Font("Tahoma", 9); radioButton2.Font = new Font("Tahoma", 9, FontStyle.Bold); radioButton3.Font = new Font("Tahoma", 9); }
+            if (radioButton3.Checked == true) { radioButton3.ForeColor = Color.OrangeRed; radioButton1.ForeColor = Color.WhiteSmoke; radioButton2.ForeColor = Color.WhiteSmoke; radioButton1.Font = new Font("Tahoma", 9); radioButton2.Font = new Font("Tahoma", 9); radioButton3.Font = new Font("Tahoma", 9, FontStyle.Bold); }
         }
     }
 }

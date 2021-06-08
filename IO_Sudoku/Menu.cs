@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IO_Sudoku.src.model;
+using System.IO;
 
 namespace IO_Sudoku
 {
@@ -22,6 +23,11 @@ namespace IO_Sudoku
             centerPanel(panel2);
 
             panel2.Visible = false;
+            string path = @"C:\highscore.txt";
+            using (StreamReader sr = new StreamReader(path))
+            {
+                label5.Text = "Najlepszy wynik: " + sr.ReadLine();
+            }
         }
 
         private void centerPanel(Panel panel)
@@ -63,6 +69,11 @@ namespace IO_Sudoku
         {
             panel2.Visible = false;
             panel1.Visible = true;
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+        
         }
     }
 }
