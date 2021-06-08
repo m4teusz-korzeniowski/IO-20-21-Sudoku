@@ -204,6 +204,7 @@ namespace IO_Sudoku
             this.panel2.Controls.Add(this.tableLayoutPanel3);
             this.panel2.Location = new System.Drawing.Point(131, -47);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
+
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(300, 273);
             this.panel2.TabIndex = 5;
