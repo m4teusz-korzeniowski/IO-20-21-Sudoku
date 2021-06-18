@@ -53,7 +53,7 @@ namespace IO_Sudoku
             loadUsers();
             loadUsersGlobalUsers();
 
-            GuestButton.Enabled = false; //tymczasowo wyłączone
+            //GuestButton.Enabled = false; //tymczasowo wyłączone
 
             panel2.Visible = false;
             panel3.Visible = false;
@@ -364,7 +364,7 @@ namespace IO_Sudoku
                 button.Location = position;
                 button.Text = user.Name;
                 button.BackColor = Color.FromArgb(56, 140, 0);
-                button.Size = new Size (150, 58);
+                button.Size = new Size (192, 58);
                 button.FlatStyle = 0;
                 button.FlatAppearance.MouseOverBackColor = Color.YellowGreen;
                 button.FlatAppearance.BorderColor = Color.Black;
@@ -372,18 +372,13 @@ namespace IO_Sudoku
                 button.Font = new Font("Tahoma", 10, FontStyle.Bold);
                 button.ForeColor = Color.WhiteSmoke;
                 //button.Location = new Point(button.Location.X + 20);
-                panel3.Controls.Add(button);
+                panel8.Controls.Add(button);
                 button.Visible = true;
 
                 button.Click += new EventHandler(userClick);
 
+
                 position.Y += 75;
-
-
-
-
-                
-
 
             }
 
@@ -489,6 +484,12 @@ namespace IO_Sudoku
         {
             panel4.Visible = false;
             panel1.Visible = true;
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            panel3.Visible = false;
+            panel5.Visible = true;
         }
     }
 }

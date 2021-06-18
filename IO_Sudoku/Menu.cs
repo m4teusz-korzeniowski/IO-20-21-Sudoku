@@ -76,7 +76,6 @@ namespace IO_Sudoku
 
             label1.Text = _loggedUser.Name;
             label2.Text = _loggedUser.Email;
-            label3.Text = _loggedUser.TimePlayed.ToString();
             label4.Text = _loggedUser.JoinDate.ToString();
             panel2.Visible = true;
             

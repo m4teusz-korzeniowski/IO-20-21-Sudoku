@@ -213,8 +213,8 @@ namespace Sudoku
             if (wrongCells.Any())
             {
                 wrongCells.ForEach(x => x.ForeColor = Color.Red);
+                i -= 3000;
                 MessageBox.Show("Zle");
-                i -= 10000;
             }
             else
             {
@@ -261,7 +261,7 @@ namespace Sudoku
         private void button1_Click(object sender, EventArgs e)
         {
             startNewGame();
-            i = 360000;
+            i = 100000;
             timer1.Enabled = true;
         }
 
@@ -281,8 +281,8 @@ namespace Sudoku
             
             
             
-            if (i < 240000) { label2.ForeColor = Color.Gold; };
-            if (i < 120000) {
+            if (i < 75000) { label2.ForeColor = Color.Gold; };
+            if (i < 25000) {
                 
                 label2.ForeColor = Color.DarkOrange;
                 if (ticktock == 0) {label2.Font = new Font("Tahoma", 24, FontStyle.Bold | FontStyle.Italic); };

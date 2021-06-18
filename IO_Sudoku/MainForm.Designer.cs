@@ -37,7 +37,6 @@ namespace Sudoku
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.Sprawdz = new System.Windows.Forms.Button();
-            this.Zapisz = new System.Windows.Forms.Button();
             this.Wyszysc = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
@@ -132,26 +131,11 @@ namespace Sudoku
             this.Sprawdz.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.Sprawdz.Location = new System.Drawing.Point(3, 3);
             this.Sprawdz.Name = "Sprawdz";
-            this.Sprawdz.Size = new System.Drawing.Size(223, 44);
+            this.Sprawdz.Size = new System.Drawing.Size(146, 94);
             this.Sprawdz.TabIndex = 6;
             this.Sprawdz.Text = "SPRAWDŹ";
             this.Sprawdz.UseVisualStyleBackColor = false;
             this.Sprawdz.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // Zapisz
-            // 
-            this.Zapisz.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
-            this.Zapisz.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.Zapisz.FlatAppearance.MouseOverBackColor = System.Drawing.Color.YellowGreen;
-            this.Zapisz.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Zapisz.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Bold);
-            this.Zapisz.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.Zapisz.Location = new System.Drawing.Point(232, 3);
-            this.Zapisz.Name = "Zapisz";
-            this.Zapisz.Size = new System.Drawing.Size(224, 44);
-            this.Zapisz.TabIndex = 7;
-            this.Zapisz.Text = "ZAPISZ";
-            this.Zapisz.UseVisualStyleBackColor = false;
             // 
             // Wyszysc
             // 
@@ -161,9 +145,9 @@ namespace Sudoku
             this.Wyszysc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Wyszysc.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Bold);
             this.Wyszysc.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.Wyszysc.Location = new System.Drawing.Point(3, 53);
+            this.Wyszysc.Location = new System.Drawing.Point(307, 3);
             this.Wyszysc.Name = "Wyszysc";
-            this.Wyszysc.Size = new System.Drawing.Size(223, 44);
+            this.Wyszysc.Size = new System.Drawing.Size(149, 94);
             this.Wyszysc.TabIndex = 8;
             this.Wyszysc.Text = "WYCZYŚĆ";
             this.Wyszysc.UseVisualStyleBackColor = false;
@@ -171,18 +155,17 @@ namespace Sudoku
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.Wyszysc, 0, 1);
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.Sprawdz, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.Zapisz, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Wyszysc, 2, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(279, 694);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(459, 100);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
@@ -194,9 +177,9 @@ namespace Sudoku
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(232, 53);
+            this.button1.Location = new System.Drawing.Point(155, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(224, 44);
+            this.button1.Size = new System.Drawing.Size(146, 94);
             this.button1.TabIndex = 9;
             this.button1.Text = "ZAMKNIJ";
             this.button1.UseVisualStyleBackColor = false;
@@ -260,7 +243,6 @@ namespace Sudoku
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Sprawdz;
-        private System.Windows.Forms.Button Zapisz;
         private System.Windows.Forms.Button Wyszysc;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button button1;
