@@ -14,6 +14,16 @@ using System.Text.Json;
 using System.Net.Mail;
 using System.Net;
 
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage;
+
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Auth;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage.Blob.Protocol;
+
+
 namespace IO_Sudoku
 {
     public partial class UserChoice : Form
@@ -21,6 +31,9 @@ namespace IO_Sudoku
         List<User> users = new List<User>();
         List<User> globalUsers = new List<User>();
         SmtpClient smtpClient;
+
+        string connectionString = "GPu5x3qbpzJ4kDSViR5RQ56TpgXx9zJNhmAoMm7l3GZwfvakkBZN2mMsIkcJkxEfarvzY+R973ltsAy9VZqgCg==";
+        string storageAccountName = "sudoku10";
 
         public UserChoice()
         {
@@ -56,6 +69,7 @@ namespace IO_Sudoku
             label6.Text = "E-mail";
             label5.Text = "E-mail";
             label7.Text = "Hasło";
+
 
             textBox6.PasswordChar = '*';
             button7.Visible = false; // fake button do łatwego tworzenia następnych
@@ -107,7 +121,23 @@ namespace IO_Sudoku
         private void loadUsersGlobalUsers()
         {
             DirectoryInfo localDirectory = new DirectoryInfo("global");
+
+            var storageAccount = new CloudStorageAccount(
+                        new StorageCredentials(storageAccountName, connectionString), true);
+            var blobClient = storageAccount.CreateCloudBlobClient();
+
+            var containter = blobClient.GetContainerReference("users");
+            containter.CreateIfNotExists();
+
+            var blobs = containter.ListBlobs();
+
+            downloadBlobs(blobs, "");
+
+
+
             DirectoryInfo[] localUsers = localDirectory.GetDirectories();
+
+
             foreach (DirectoryInfo dir in localUsers)
             {
                 FileInfo[] files = dir.GetFiles("*.json");
@@ -122,6 +152,22 @@ namespace IO_Sudoku
                     {
                         globalUsers.Add(u);
                     }
+                }
+            }
+        }
+
+        private void downloadBlobs(IEnumerable<IListBlobItem> blobs, string dir)
+        {
+            foreach(var blob in blobs)
+            {
+                if(blob is CloudBlockBlob blockBlob)
+                {
+                    blockBlob.DownloadToFile(dir +  blockBlob.Name, FileMode.Create);
+                }
+                else if(blob is CloudBlobDirectory blobDirectory)
+                {
+                    Directory.CreateDirectory("global/" + blobDirectory.Prefix);
+                    downloadBlobs(blobDirectory.ListBlobs(), "global/");
                 }
             }
         }
@@ -205,24 +251,46 @@ namespace IO_Sudoku
         {
             bool isUserAddedProperly = false;
             User u = new User();
+
+            
             try
             {
-                u.Name = textBox4.Text;
-                u.Email = textBox3.Text;
+                u.Name = textBox3.Text;
+                u.Email = textBox4.Text;
                 isUserAddedProperly = addGlobalUser(u);
                 if (isUserAddedProperly)
                 {
                     string pass = generateLoginToken();
                     u.Password = pass;
                     globalUsers.Add(u);
-                    smtpClient.Send("io.sudoku.2021@gmail.com",
+                    /*smtpClient.Send("io.sudoku.2021@gmail.com",
                         u.Email, "Test", pass);
-
+                    */
                     panel6.Visible = false;
                     panel1.Visible = true;
                     Directory.CreateDirectory("global//" + u.Name);
                     string userInfo = JsonSerializer.Serialize(u);
                     File.WriteAllText("global//" + u.Name + "//" + u.Name + ".json", userInfo);
+
+                    string containerName = "users";
+                    string blobName = u.Name + ".json";
+                    string filePath = "global//" + u.Name + "//" + u.Name + ".json";
+
+
+                    var storageAccount = new CloudStorageAccount(
+                        new StorageCredentials(storageAccountName, connectionString), true);
+                    var blobClient = storageAccount.CreateCloudBlobClient();
+
+                    var containter = blobClient.GetContainerReference(containerName);
+                    containter.CreateIfNotExists();
+                    containter.SetPermissions(new BlobContainerPermissions()
+                    {
+                        PublicAccess = BlobContainerPublicAccessType.Blob
+                    });
+
+                    var blob = containter.GetBlockBlobReference(u.Name + "/" + u.Name + ".json");
+                    blob.UploadFromFile(filePath);
+
 
                 }
             }
@@ -295,7 +363,6 @@ namespace IO_Sudoku
                 Button button = new Button();
                 button.Location = position;
                 button.Text = user.Name;
-                button.Click += new EventHandler(userClick);
                 button.BackColor = Color.FromArgb(56, 140, 0);
                 button.Size = new Size (150, 58);
                 button.FlatStyle = 0;
@@ -304,14 +371,22 @@ namespace IO_Sudoku
                 button.FlatAppearance.BorderSize = 1;
                 button.Font = new Font("Tahoma", 10, FontStyle.Bold);
                 button.ForeColor = Color.WhiteSmoke;
-                button.Location = new Point(button.Location.X + 20);
+                //button.Location = new Point(button.Location.X + 20);
                 panel3.Controls.Add(button);
                 button.Visible = true;
 
-                position.Y += 50;
+                button.Click += new EventHandler(userClick);
+
+                position.Y += 75;
+
+
+
+
+                
 
 
             }
+
         }
 
         private void userClick(object sender, EventArgs e)
