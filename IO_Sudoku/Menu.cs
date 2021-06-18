@@ -15,6 +15,7 @@ namespace IO_Sudoku
     public partial class Menu : Form
     {
         private User _loggedUser;
+        private string path;
         public Menu(User user)
         {
             InitializeComponent();
@@ -23,11 +24,27 @@ namespace IO_Sudoku
             centerPanel(panel2);
 
             panel2.Visible = false;
-            string path = @"C:\highscore.txt";
-            using (StreamReader sr = new StreamReader(path))
+
+            if(user.Password != null)
             {
-                label5.Text = "Najlepszy wynik: " + sr.ReadLine();
+                path = "global/" + user.Name + "/highscore.txt";
             }
+            else
+            {
+                path = "local/" + user.Name + "/highscore.txt";
+            }
+            if (File.Exists(path))
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    label5.Text = "Najlepszy wynik: " + sr.ReadLine();
+                }
+            }
+            else
+            {
+                label5.Text = "Najlepszy wynik: 0";
+            }
+            
         }
 
         private void centerPanel(Panel panel)
@@ -48,7 +65,7 @@ namespace IO_Sudoku
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var board = new Sudoku.Form1();
+            var board = new Sudoku.Form1(path,_loggedUser.Name);
             board.Show();
             this.Hide();
         }
@@ -59,7 +76,6 @@ namespace IO_Sudoku
 
             label1.Text = _loggedUser.Name;
             label2.Text = _loggedUser.Email;
-            label3.Text = _loggedUser.TimePlayed.ToString();
             label4.Text = _loggedUser.JoinDate.ToString();
             panel2.Visible = true;
             

@@ -10,11 +10,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Auth;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage.Blob.Protocol;
+
 
 namespace Sudoku
 {
     public partial class Form1 : Form
     {
+
+        string path;
+        string userName;
+
+        string connectionString = "GPu5x3qbpzJ4kDSViR5RQ56TpgXx9zJNhmAoMm7l3GZwfvakkBZN2mMsIkcJkxEfarvzY+R973ltsAy9VZqgCg==";
+        string storageAccountName = "sudoku10";
 
         int i = 360000;
         int ticktock = 0;
@@ -31,7 +42,7 @@ namespace Sudoku
                 this.IsLocked = false;
             }
         }
-        public Form1()
+        public Form1(string _path, string _userName)
         {
             InitializeComponent();
 
@@ -40,6 +51,8 @@ namespace Sudoku
             startNewGame();
 
             radioButton1.Checked = true;
+            path = _path;
+            userName = _userName;
 
         }
 
@@ -200,20 +213,47 @@ namespace Sudoku
             if (wrongCells.Any())
             {
                 wrongCells.ForEach(x => x.ForeColor = Color.Red);
+                i -= 3000;
                 MessageBox.Show("Zle");
-                i -= 10000;
             }
             else
             {
                 timer1.Enabled = false;
                 MessageBox.Show("Wygrales");
-                string path = @"C:\highscore.txt";
-                string text = File.ReadAllText(path, Encoding.UTF8);
-                if (i > Int32.Parse(text))
+                if (!File.Exists(path))
                 {
-                    TextWriter hs = new StreamWriter(path);
-                    hs.WriteLine(i);
-                    hs.Close();
+                    File.WriteAllText(path, "0");
+                }
+                int bestResult = 0;
+                if (File.Exists(path))
+                {
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        bestResult = Convert.ToInt32(sr.ReadLine());
+                    }
+                }
+
+                if(i > bestResult)
+                {
+                    File.WriteAllText(path, i.ToString());
+                    string containerName = "users";
+                    string blobName = path;
+                    string filePath = "global/" + userName + "/" + path;
+
+
+                    var storageAccount = new CloudStorageAccount(
+                        new StorageCredentials(storageAccountName, connectionString), true);
+                    var blobClient = storageAccount.CreateCloudBlobClient();
+
+                    var containter = blobClient.GetContainerReference(containerName);
+                    containter.CreateIfNotExists();
+                    containter.SetPermissions(new BlobContainerPermissions()
+                    {
+                        PublicAccess = BlobContainerPublicAccessType.Blob
+                    });
+
+                    var blob = containter.GetBlockBlobReference(userName + "/highscore.txt");
+                    blob.UploadFromFile(path);
                 }
             }
         }
@@ -221,7 +261,7 @@ namespace Sudoku
         private void button1_Click(object sender, EventArgs e)
         {
             startNewGame();
-            i = 360000;
+            i = 100000;
             timer1.Enabled = true;
         }
 
@@ -241,8 +281,8 @@ namespace Sudoku
             
             
             
-            if (i < 240000) { label2.ForeColor = Color.Gold; };
-            if (i < 120000) {
+            if (i < 75000) { label2.ForeColor = Color.Gold; };
+            if (i < 25000) {
                 
                 label2.ForeColor = Color.DarkOrange;
                 if (ticktock == 0) {label2.Font = new Font("Tahoma", 24, FontStyle.Bold | FontStyle.Italic); };
