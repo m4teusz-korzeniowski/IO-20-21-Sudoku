@@ -377,6 +377,7 @@ namespace IO_Sudoku
 
                 button.Click += new EventHandler(userClick);
 
+
                 position.Y += 75;
 
             }
