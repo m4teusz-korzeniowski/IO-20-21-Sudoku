@@ -32,6 +32,8 @@ namespace IO_Sudoku
         List<User> globalUsers = new List<User>();
         SmtpClient smtpClient;
 
+        private bool isPositionCorrected = false;
+
         string connectionString = "GPu5x3qbpzJ4kDSViR5RQ56TpgXx9zJNhmAoMm7l3GZwfvakkBZN2mMsIkcJkxEfarvzY+R973ltsAy9VZqgCg==";
         string storageAccountName = "sudoku10";
 
@@ -47,6 +49,7 @@ namespace IO_Sudoku
             centerPanel(panel5);
             centerPanel(panel6);
             centerPanel(panel7);
+            centerPanel(panel8);
             Directory.CreateDirectory("local");
             Directory.CreateDirectory("global");
 
@@ -61,6 +64,7 @@ namespace IO_Sudoku
             panel5.Visible = false;
             panel6.Visible = false;
             panel7.Visible = false;
+            //panel8.Visible = false;
 
             label1.Text = "Nazwa";
             label2.Text = "E-mail";
@@ -263,9 +267,9 @@ namespace IO_Sudoku
                     string pass = generateLoginToken();
                     u.Password = pass;
                     globalUsers.Add(u);
-                    /*smtpClient.Send("io.sudoku.2021@gmail.com",
+                    smtpClient.Send("io.sudoku.2021@gmail.com",
                         u.Email, "Test", pass);
-                    */
+                    
                     panel6.Visible = false;
                     panel1.Visible = true;
                     Directory.CreateDirectory("global//" + u.Name);
@@ -343,7 +347,21 @@ namespace IO_Sudoku
             bool isEmpty = !users.Any();
             if (isEmpty)
             {
+                Point position = button7.Location;          
+                Point textPosition = label3.Location;
+                
+
+                if(isPositionCorrected == false)
+                {
+                    position.X += 60;
+                    textPosition.X += 60;
+                    isPositionCorrected = true;
+                }
+                label3.Location = textPosition;
+                button7.Location = position;
                 button7.Visible = true;
+                button7.Size = new Size(192, 58);
+                //createUserButtons();
             }
             else
             {
@@ -358,6 +376,11 @@ namespace IO_Sudoku
         private void createUserButtons()
         {
             Point position = button7.Location;
+            if(isPositionCorrected == false)
+            {
+                position.X += 60;
+            }
+
             foreach (User user in users)
             {
                 Button button = new Button();
@@ -377,10 +400,28 @@ namespace IO_Sudoku
 
                 button.Click += new EventHandler(userClick);
 
-
                 position.Y += 75;
 
             }
+
+            Button button2 = new Button();
+            button2.Location = position;
+            button2.Text = "POWRÓT";
+            button2.BackColor = Color.FromArgb(56, 140, 0);
+            button2.Size = new Size(192, 58);
+            button2.FlatStyle = 0;
+            button2.FlatAppearance.MouseOverBackColor = Color.YellowGreen;
+            button2.FlatAppearance.BorderColor = Color.Black;
+            button2.FlatAppearance.BorderSize = 1;
+            button2.Font = new Font("Tahoma", 10, FontStyle.Bold);
+            button2.ForeColor = Color.WhiteSmoke;
+            //button.Location = new Point(button.Location.X + 20);
+            panel8.Controls.Add(button2);
+            button2.Visible = true;
+
+            button2.Click += button7_Click;
+
+
 
         }
 
