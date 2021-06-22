@@ -37,6 +37,8 @@ namespace IO_Sudoku
         string connectionString = "GPu5x3qbpzJ4kDSViR5RQ56TpgXx9zJNhmAoMm7l3GZwfvakkBZN2mMsIkcJkxEfarvzY+R973ltsAy9VZqgCg==";
         string storageAccountName = "sudoku10";
 
+        Button backButton = new Button();
+
         public UserChoice()
         {
             InitializeComponent();
@@ -404,22 +406,21 @@ namespace IO_Sudoku
 
             }
 
-            Button button2 = new Button();
-            button2.Location = position;
-            button2.Text = "POWRÓT";
-            button2.BackColor = Color.FromArgb(56, 140, 0);
-            button2.Size = new Size(192, 58);
-            button2.FlatStyle = 0;
-            button2.FlatAppearance.MouseOverBackColor = Color.YellowGreen;
-            button2.FlatAppearance.BorderColor = Color.Black;
-            button2.FlatAppearance.BorderSize = 1;
-            button2.Font = new Font("Tahoma", 10, FontStyle.Bold);
-            button2.ForeColor = Color.WhiteSmoke;
+            backButton.Location = position;
+            backButton.Text = "POWRÓT";
+            backButton.BackColor = Color.FromArgb(56, 140, 0);
+            backButton.Size = new Size(192, 58);
+            backButton.FlatStyle = 0;
+            backButton.FlatAppearance.MouseOverBackColor = Color.YellowGreen;
+            backButton.FlatAppearance.BorderColor = Color.Black;
+            backButton.FlatAppearance.BorderSize = 1;
+            backButton.Font = new Font("Tahoma", 10, FontStyle.Bold);
+            backButton.ForeColor = Color.WhiteSmoke;
             //button.Location = new Point(button.Location.X + 20);
-            panel8.Controls.Add(button2);
-            button2.Visible = true;
+            panel8.Controls.Add(backButton);
+            backButton.Visible = true;
 
-            button2.Click += button7_Click;
+            backButton.Click += button7_Click;
 
 
 
