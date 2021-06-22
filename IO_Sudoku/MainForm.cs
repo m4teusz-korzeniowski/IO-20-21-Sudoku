@@ -233,7 +233,7 @@ namespace Sudoku
                     }
                 }
 
-                if(i > bestResult)
+                if(i > bestResult && path.ElementAt(0)  == 'g')
                 {
                     File.WriteAllText(path, i.ToString());
                     string containerName = "users";
